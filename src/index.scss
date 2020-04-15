@@ -19,7 +19,7 @@ body {
   left: 50%;
   top: 50%;
   width: 750px;
-  height: 530px;
+  min-height: 530px;
   transform: translate(-50%, -50%);
   box-shadow: 1px 2px 20px #f3f3f3;
   border-radius: 10px;
@@ -29,7 +29,7 @@ body {
   &__sidebar {
     background-color: #F4F6F8;
     width: 200px;
-    height: calc(100% - 120px);
+    // height: calc(100% - 120px);
     border-right: 1px solid #f1f1f1;
     padding: 60px 20px;
   }
@@ -47,6 +47,7 @@ body {
   border: 0;
   padding: 10px 20px;
   cursor: pointer;
+  font-size: 14px;
 
   &:hover {
     background-color: darken(#4DD599, 6%);
@@ -54,6 +55,23 @@ body {
 
   &:active {
     background-color: darken(#4DD599, 10%);
+  }
+
+  &:disabled {
+    background-color: #d8d8d8;
+  }
+
+  &--grey {
+    background-color: #f4f6f8;
+    color: #444444;
+
+    &:hover {
+      background-color: darken(#f4f6f8, 3%)
+    }
+
+    &:active {
+      background-color: darken(#f4f6f8, 6%)
+    }
   }
 }
 
@@ -64,6 +82,7 @@ body {
   border-radius: 4px;
   padding: 8px 12px;
   width: 100%;
+  font-size: 14px;
 
   &:focus {
     border-color: #dbdbdb;
