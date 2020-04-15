@@ -4,14 +4,9 @@ import axios from 'axios';
 import { List, AddList, Tasks } from './components'
 
 function App() {
-  // const [lists, setLists] = useState(
-  //   DB.lists.map(item => {
-  //     item.color = DB.colors.filter(color => color.id === item.colorId)[0].name;
-  //     return item;
-  //   })
-  // );
   const [lists, setLists] = useState(null);
   const [colors, setColors] = useState(null);
+  const [activeItem, setActiveItem] = useState(null);
 
   useEffect(() => {
     axios.get('http://localhost:3001/lists?_expand=color&_embed=tasks').then(({ data }) => {
@@ -28,12 +23,37 @@ function App() {
     setLists(newList);
   };
 
+  const onAddTask = (listId, taskObj) => {
+    const newTask = lists.map(item => {
+      if (item.id === listId) {
+        item.tasks = [...item.tasks, taskObj];
+      }
+      return item;
+    });
+    
+    setLists(newTask);
+  };
+
+
+
+  const onEditListTitle = (id, title) => {
+    const newTitle = lists.map(item => {
+      if (item.id === id) {
+        item.name = title;
+      }
+      return item;
+    });
+
+    setLists(newTitle);
+  };
+
   return (
     <div className="todo">
       <div className="todo__sidebar">
         <List 
           items={[
             {
+              active: true,
               icon: (<svg 
                       width="14" 
                       height="12" 
@@ -56,6 +76,10 @@ function App() {
               const newLists = lists.filter(item => item.id !== id);
               setLists(newLists);
             }}
+            onClickItem={item => {
+              setActiveItem(item);
+            }}
+            activeItem={activeItem}
             isRemovable
           />
         ) : (
@@ -65,7 +89,13 @@ function App() {
       </div>
 
       <div className="todo__tasks">
-          {lists && <Tasks list={lists[1]} />}
+          {lists && activeItem && 
+            <Tasks 
+              list={activeItem} 
+              onAddTask={onAddTask}
+              onEditTitle={onEditListTitle} 
+            />
+          }
       </div>
     </div>
   );
