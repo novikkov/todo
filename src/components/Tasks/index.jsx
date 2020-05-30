@@ -1,5 +1,6 @@
 import React from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 import editSvg from '../../assets/icons/edit.svg';
 
@@ -24,10 +25,12 @@ const Tasks = ({ list, onEditTitle, onAddTask, withoutEmpty, onRemoveTask, onEdi
 
   return (
     <div className="tasks">
-      <h2 style={{ color: list.color.hex }} className="tasks__title">
-        {list.name}
-        <img onClick={editTitle} src={editSvg} alt="Edit" />
-      </h2>
+      <Link to={`/lists/${list.id}`}>
+        <h2 style={{ color: list.color.hex }} className="tasks__title">
+          {list.name}
+          <img onClick={editTitle} src={editSvg} alt="Edit" />
+        </h2>
+      </Link>
 
       <div className="tasks__items">
         {!withoutEmpty && list.tasks && !list.tasks.length && <h2>Задачи отсутствуют</h2>}
